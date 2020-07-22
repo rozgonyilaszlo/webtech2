@@ -13,14 +13,14 @@ Vagy a gyakorlaton tanult technológiák közül szabadon választva.
 Futtatás:
 
 Backend
-1.) cd backend
-2.) npm install
-3.) npm run build
-4.) node dist/main.js
+- cd backend
+- npm install
+- npm run build
+- node dist/main.js
 
 Frontend
-1.) cd frontend/bead
-2.) npm install
-3.) npm run ng serve
+- cd frontend/bead
+- npm install
+- npm run ng serve
 
 
