@@ -10,6 +10,7 @@ Egy nyilvántartó rendszer készítése tetszőleges témakörben (pl. terméke
 Vagy a gyakorlaton tanult technológiák közül szabadon választva.
 
 
+
 Futtatás:
 
 Backend
