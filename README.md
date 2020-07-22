@@ -11,7 +11,7 @@ Vagy a gyakorlaton tanult technológiák közül szabadon választva.
 
 
 
-Futtatás:
+# Futtatás:
 
 Backend
 - cd backend
