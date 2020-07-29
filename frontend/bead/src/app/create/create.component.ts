@@ -2,9 +2,10 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Car } from '../model/Car';
 import { Part } from '../model/Part';
 import { CarService } from '../services/CarService';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDividerModule } from '@angular/material/divider';
+
 
 @Component({
   selector: 'app-create',
@@ -13,44 +14,79 @@ import { MatDividerModule } from '@angular/material/divider';
 })
 
 export class CreateComponent implements OnInit {
- cars: Car[];
+  car: Car = new Car();
+  part: Part = new Part();
 
-  constructor(private carService: CarService) { }
+  createdParts: Part[] = [];
+  createdPartsSource: MatTableDataSource<Part> = new MatTableDataSource([]);
+
+  @ViewChild('createCarForm', { static: true, read: ElementRef }) createCarForm: ElementRef;
+  @ViewChild('partForm', { static: true, read: ElementRef }) partForm: ElementRef;
+  @ViewChild('partsTable', { static: true }) partsTable: MatTable<any>;
+  displayedColumnsParts: string[] = ['name', 'productGroup', 'manufacturer', 'price', 'deletePart'];
+  dataSourceParts = new MatTableDataSource(this.createdParts);
+ 
+  @ViewChild(MatPaginator, { static: true }) paginatorCars: MatPaginator;
+  @ViewChild('TablePartPaginator', { static: true }) tablePartPaginator: MatPaginator;
+  @ViewChild('TableCarPaginator', { static: true }) tableCarPaginator: MatPaginator;
+  
+  constructor(private carService: CarService) {
+    this.initCarValues();
+  }
 
   ngOnInit() {
-    this.getCars();
-    this.dataSource = new MatTableDataSource(this.cars);
+  }
 
+  initCarValues() {
+    this.car = new Car();
+    this.part = new Part();
+    this.createdParts = [];
   }
-  displayedColumns: string[] = [ 'manufacturer', 'type', 'yearOfMaking', 'engineCode', 'superstructure'];
-  dataSource = new MatTableDataSource(this.cars);
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log('itt');
-  }
-  getCars() {
-    this.carService.listCar().subscribe(cars => {
-      this.cars = cars;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource = new MatTableDataSource(this.cars);
-    }, () => {
-      alert("Hiba történt a konferencia listázás során");
+
+  createCar() {
+    if (this.createdParts.length == 0) {
+      alert('Adjon meg legalább egy alkatrészt')
+      return;
     }
+    console.log(this.car);
+    this.carService.addCar(this.car).subscribe(
+      () => {
+        this.initCarValues();
+        this.createCarForm.nativeElement.reset();
+        this.createdPartsSource.data = [...this.createdParts];
+      }, (error) => {
+        alert('Hiba a létrehozás során');
+      }
     );
   }
-  deleteCar(application: Car) {
-    this.carService.deleteCar(application).subscribe(() => {
-      alert("A jelentkezés törlése sikeres");
-      this.getCars();
 
-    }, () => {
-      alert("Hiba történt a jelentkezés törlése során");
-      this.getCars();
+  addNewPart() {
+    this.createdParts.push(this.part);
+    this.part = new Part();
+    this.partForm.nativeElement.reset();
+    this.createdPartsSource.data = [...this.createdParts];
+  }
+  removePart(part: Part) {
+    this.createdParts = this.createdParts.filter(actualPart => actualPart != part);
+    this.createdPartsSource.data = [...this.createdParts];
+  }
+
+  uploadCarAndParts() {
+    if (this.createdParts.length > 0) {
+      this.car.parts = this.createdParts;
     }
+    else {
+      alert('Adjon meg legalább egy alkatrészt az autóhoz')
+      return;
+    }
+    this.carService.addCar(this.car).subscribe(
+      () => {
+        this.initCarValues();
+        this.createCarForm.nativeElement.reset();
+        this.createdPartsSource.data = [...this.createdParts];
+      }, (error) => {
+        alert('Hiba az adatok felvétel során');
+      }
     );
-
   }
 }

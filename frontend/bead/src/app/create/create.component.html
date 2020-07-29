@@ -1,7 +1,112 @@
-<h1>A create</h1>
+<h1>Autó és az ahhoz tartozó alkatrészek felvitele</h1>
 <mat-divider></mat-divider>
 <br>
 <br>
 
+<h2>Autó</h2>
+<mat-divider></mat-divider>
 <br>
 <br>
+<form #createCarForm>
+    <mat-form-field>
+        <input name="car.manufacturer" matInput [(ngModel)]="car.manufacturer" placeholder="Gyártó" type="text" required minlength="1" #carManufacturerModel="ngModel" />
+        <mat-error *ngIf="carManufacturerModel.invalid && (carManufacturerModel.dirty|| carManufacturerModel.touched)">A témavezető nevét kötelező megadni</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input name="car.type" matInput [(ngModel)]="car.type" placeholder="Típus" type="text" required minlength="1" #carTypeModel="ngModel" />
+        <mat-error *ngIf="carTypeModel.invalid && (carTypeModel.dirty|| carTypeModel.touched)">A témavezető beosztását kötelező megadni</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input name="car.yearOfMaking" matInput [(ngModel)]="car.yearOfMaking" placeholder="Gyártási év" type="text" required minlength="1" #carYearOfMakingModel="ngModel" />
+        <mat-error *ngIf="carYearOfMakingModel.invalid && (carYearOfMakingModel.dirty|| carYearOfMakingModel.touched)">A témavezető beosztását kötelező megadni</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input name="car.engineCode" matInput [(ngModel)]="car.engineCode" placeholder="Motorkód" type="text" required minlength="1" #carEngineCode="ngModel" />
+        <mat-error *ngIf="carEngineCode.invalid && (carEngineCode.dirty|| carEngineCode.touched)">A témavezető beosztását kötelező megadni</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input name="car.superstructure" matInput [(ngModel)]="car.superstructure" placeholder="Karoszéria típus" type="text" required minlength="1" #carSuperstructureModel="ngModel" />
+        <mat-error *ngIf="carSuperstructureModel.invalid && (carSuperstructureModel.dirty|| carSuperstructureModel.touched)">A témavezető beosztását kötelező megadni</mat-error>
+    </mat-form-field>
+    <br>
+</form>
+
+
+<h2> Alkatrész hozzáadása</h2>
+<mat-divider></mat-divider>
+<br>
+<br>
+<form #partForm>
+    <mat-form-field>
+        <input name="part.name" matInput [(ngModel)]="part.name" placeholder="A termék neve" type="text" required minlength="1" #partNameModel="ngModel" />
+        <mat-error *ngIf="partNameModel.invalid && (partNameModel.dirty|| partNameModel.touched)">A termék nevét kötelező megadni</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input name="part.productGroup" matInput [(ngModel)]="part.productGroup" placeholder="Termék csoport" type="text" required minlength="1" #partPositionModel="ngModel" />
+        <mat-error *ngIf="partPositionModel.invalid && (partPositionModel.dirty|| partPositionModel.touched)">A termék csoportját kötelező megadni</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input name="part.manufacturer" matInput [(ngModel)]="part.manufacturer" placeholder="Gyártó" type="text" required minlength="1" #partPositionModel="ngModel" />
+        <mat-error *ngIf="partPositionModel.invalid && (partPositionModel.dirty|| partPositionModel.touched)">A gyártót kötelező megadni</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input name="part.price" matInput [(ngModel)]="part.price" placeholder="Ár" type="text" required minlength="1" #partPositionModel="ngModel" />
+        <mat-error *ngIf="partPositionModel.invalid && (partPositionModel.dirty|| partPositionModel.touched)">Az árat kötelező megadni</mat-error>
+    </mat-form-field>
+    <br>
+
+    <button mat-raised-button color="primary" (click)="addNewPart()">
+        <!-- <button mat-raised-button color="primary" (click)="addNewPart()" [disabled]="partNameModel.invalid||partPositionModel.invalid||partInstituteModel.invalid"> -->
+    <span class="material-icons">
+      add
+    </span>Alkatrész hozzáadása</button>
+</form>
+
+
+<h4>Alkatrészek listája</h4>
+<mat-divider></mat-divider>
+<br>
+<br>
+<table #partsTable mat-table [dataSource]="createdPartsSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Név</th>
+        <td mat-cell *matCellDef="let part">{{part.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="productGroup">
+        <th mat-header-cell *matHeaderCellDef> Alkatrész csoport </th>
+        <td mat-cell *matCellDef="let part"> {{part.productGroup}} </td>
+    </ng-container>
+    <ng-container matColumnDef="manufacturer">
+        <th mat-header-cell *matHeaderCellDef> Gyártó</th>
+        <td mat-cell *matCellDef="let part"> {{part.manufacturer}} </td>
+    </ng-container>
+    <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef> Ár </th>
+        <td mat-cell *matCellDef="let part"> {{part.price}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="deletePart">
+        <th mat-header-cell *matHeaderCellDef> Alkatrész törlése</th>
+        <td mat-cell *matCellDef="let part">
+            <button mat-raised-button color="primary" (click)="removePart(part)"><span class="material-icons">
+          delete
+        </span>Alkatrész törlése</button>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsParts"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsParts;"></tr>
+</table>
+
+<br>
+<br>
+<button mat-raised-button color="primary" (click)="uploadCarAndParts()"><span
+    class="material-icons">
+    add
+  </span>Autók és az alkatrészeinek hozzáadásának lezárása</button>

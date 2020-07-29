@@ -1,7 +1,72 @@
-<h1>A partslist</h1>
+<h1>Alkatrészek</h1>
 <mat-divider></mat-divider>
 <br>
 <br>
 
 <br>
 <br>
+
+<mat-form-field>
+    <mat-label><span class="material-icons">
+      search
+    </span>Keresés</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Keresés">
+</mat-form-field>
+<br>
+<br>
+<mat-divider></mat-divider>
+<br>
+<br>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" id="participantsTable">
+    <ng-container matColumnDef="tdkTitle">
+        <th mat-header-cell *matHeaderCellDef> Gyártó </th>
+        <td mat-cell *matCellDef="let car"> {{car.manufacturer}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="tdkTitle">
+        <th mat-header-cell *matHeaderCellDef> Típus </th>
+        <td mat-cell *matCellDef="let car"> {{car.type}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="facultySectionName">
+        <th mat-header-cell *matHeaderCellDef> Gyártási év </th>
+        <td mat-cell *matCellDef="let car"> {{car.yearOfMaking}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="facultyName">
+        <th mat-header-cell *matHeaderCellDef> Motorkód </th>
+        <td mat-cell *matCellDef="let car"> {{car.engineCode}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="equipments">
+        <th mat-header-cell *matHeaderCellDef> Karoszéria </th>
+        <td mat-cell *matCellDef="let car"> {{car.superstructure}} </td>
+    </ng-container>
+    <ng-container matColumnDef="parts">
+        <th mat-header-cell *matHeaderCellDef> Alkatrész(ek) </th>
+        <td mat-cell *matCellDef="let car">
+            <span *ngFor="let part of car.parts">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Termék
+              </mat-panel-title>
+              <mat-panel-description>
+                {{part.name}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <p> Termék: {{part.name}}</p>
+            <p> Termékcsoport: {{part.productGroup}}</p>
+            <p> Gyártó: {{part.manufacturer}}</p>
+            <p><strong> Ár: {{part.price}</strong>}</p>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </span>
+        </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[50, 100, 200,500]" showFirstLastButtons></mat-paginator>
