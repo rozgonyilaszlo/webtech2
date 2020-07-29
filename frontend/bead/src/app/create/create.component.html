@@ -10,27 +10,27 @@
 <form #createCarForm>
     <mat-form-field>
         <input name="car.manufacturer" matInput [(ngModel)]="car.manufacturer" placeholder="Gyártó" type="text" required minlength="1" #carManufacturerModel="ngModel" />
-        <mat-error *ngIf="carManufacturerModel.invalid && (carManufacturerModel.dirty|| carManufacturerModel.touched)">A témavezető nevét kötelező megadni</mat-error>
+        <mat-error *ngIf="carManufacturerModel.invalid && (carManufacturerModel.dirty|| carManufacturerModel.touched)">Az autó gyártóját kötelező megadni</mat-error>
     </mat-form-field>
     <br>
     <mat-form-field>
         <input name="car.type" matInput [(ngModel)]="car.type" placeholder="Típus" type="text" required minlength="1" #carTypeModel="ngModel" />
-        <mat-error *ngIf="carTypeModel.invalid && (carTypeModel.dirty|| carTypeModel.touched)">A témavezető beosztását kötelező megadni</mat-error>
+        <mat-error *ngIf="carTypeModel.invalid && (carTypeModel.dirty|| carTypeModel.touched)">Az autó típusát kötelező megadni</mat-error>
     </mat-form-field>
     <br>
     <mat-form-field>
-        <input name="car.yearOfMaking" matInput [(ngModel)]="car.yearOfMaking" placeholder="Gyártási év" type="text" required minlength="1" #carYearOfMakingModel="ngModel" />
-        <mat-error *ngIf="carYearOfMakingModel.invalid && (carYearOfMakingModel.dirty|| carYearOfMakingModel.touched)">A témavezető beosztását kötelező megadni</mat-error>
+        <input name="car.yearOfMaking" matInput [(ngModel)]="car.yearOfMaking" placeholder="Gyártási év" type="number" required minlength="1" maxlength="4" #carYearOfMakingModel="ngModel" />
+        <mat-error *ngIf="carYearOfMakingModel.invalid && (carYearOfMakingModel.dirty|| carYearOfMakingModel.touched)">Az autó gyártási évét kötelező megadni</mat-error>
     </mat-form-field>
     <br>
     <mat-form-field>
         <input name="car.engineCode" matInput [(ngModel)]="car.engineCode" placeholder="Motorkód" type="text" required minlength="1" #carEngineCode="ngModel" />
-        <mat-error *ngIf="carEngineCode.invalid && (carEngineCode.dirty|| carEngineCode.touched)">A témavezető beosztását kötelező megadni</mat-error>
+        <mat-error *ngIf="carEngineCode.invalid && (carEngineCode.dirty|| carEngineCode.touched)">Az autó motorkódját kötelező megadni</mat-error>
     </mat-form-field>
     <br>
     <mat-form-field>
         <input name="car.superstructure" matInput [(ngModel)]="car.superstructure" placeholder="Karoszéria típus" type="text" required minlength="1" #carSuperstructureModel="ngModel" />
-        <mat-error *ngIf="carSuperstructureModel.invalid && (carSuperstructureModel.dirty|| carSuperstructureModel.touched)">A témavezető beosztását kötelező megadni</mat-error>
+        <mat-error *ngIf="carSuperstructureModel.invalid && (carSuperstructureModel.dirty|| carSuperstructureModel.touched)">Az autó karoszéria típusát kötelező megadni</mat-error>
     </mat-form-field>
     <br>
 </form>
@@ -47,23 +47,23 @@
     </mat-form-field>
     <br>
     <mat-form-field>
-        <input name="part.productGroup" matInput [(ngModel)]="part.productGroup" placeholder="Termék csoport" type="text" required minlength="1" #partPositionModel="ngModel" />
-        <mat-error *ngIf="partPositionModel.invalid && (partPositionModel.dirty|| partPositionModel.touched)">A termék csoportját kötelező megadni</mat-error>
+        <input name="part.productGroup" matInput [(ngModel)]="part.productGroup" placeholder="Termék csoport" type="text" required minlength="1" #partProductGroupModel="ngModel" />
+        <mat-error *ngIf="partProductGroupModel.invalid && (partProductGroupModel.dirty|| partProductGroupModel.touched)">A termék csoportját kötelező megadni</mat-error>
     </mat-form-field>
     <br>
     <mat-form-field>
-        <input name="part.manufacturer" matInput [(ngModel)]="part.manufacturer" placeholder="Gyártó" type="text" required minlength="1" #partPositionModel="ngModel" />
-        <mat-error *ngIf="partPositionModel.invalid && (partPositionModel.dirty|| partPositionModel.touched)">A gyártót kötelező megadni</mat-error>
+        <input name="part.manufacturer" matInput [(ngModel)]="part.manufacturer" placeholder="Gyártó" type="text" required minlength="1" #partmManufacturerModel="ngModel" />
+        <mat-error *ngIf="partmManufacturerModel.invalid && (partmManufacturerModel.dirty|| partmManufacturerModel.touched)">Az alkatrészgyártót kötelező megadni</mat-error>
     </mat-form-field>
     <br>
     <mat-form-field>
-        <input name="part.price" matInput [(ngModel)]="part.price" placeholder="Ár" type="text" required minlength="1" #partPositionModel="ngModel" />
-        <mat-error *ngIf="partPositionModel.invalid && (partPositionModel.dirty|| partPositionModel.touched)">Az árat kötelező megadni</mat-error>
+        <input name="part.price" matInput [(ngModel)]="part.price" placeholder="Ár" type="number" required minlength="1" #partPriceModel="ngModel" />
+        <mat-error *ngIf="partPriceModel.invalid && (partPriceModel.dirty|| partPriceModel.touched)">Az árat kötelező megadni</mat-error>
     </mat-form-field>
     <br>
 
-    <button mat-raised-button color="primary" (click)="addNewPart()">
-        <!-- <button mat-raised-button color="primary" (click)="addNewPart()" [disabled]="partNameModel.invalid||partPositionModel.invalid||partInstituteModel.invalid"> -->
+    <!-- <button mat-raised-button color="primary" (click)="addNewPart()"> -->
+    <button mat-raised-button color="primary" (click)="addNewPart()" [disabled]="partNameModel.invalid||partProductGroupModel.invalid||partmManufacturerModel.invalid||partPriceModel.invalid">
     <span class="material-icons">
       add
     </span>Alkatrész hozzáadása</button>
