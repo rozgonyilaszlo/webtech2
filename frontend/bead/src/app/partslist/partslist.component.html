@@ -1,4 +1,4 @@
-<h1>Alkatrészek</h1>
+<h1>Autók és Alkatrészek listázása</h1>
 <mat-divider></mat-divider>
 <br>
 <br>
@@ -19,27 +19,27 @@
 <br>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" id="participantsTable">
-    <ng-container matColumnDef="tdkTitle">
+    <ng-container matColumnDef="manufacturer">
         <th mat-header-cell *matHeaderCellDef> Gyártó </th>
         <td mat-cell *matCellDef="let car"> {{car.manufacturer}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="tdkTitle">
+    <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef> Típus </th>
         <td mat-cell *matCellDef="let car"> {{car.type}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="facultySectionName">
+    <ng-container matColumnDef="yearOfMaking">
         <th mat-header-cell *matHeaderCellDef> Gyártási év </th>
         <td mat-cell *matCellDef="let car"> {{car.yearOfMaking}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="facultyName">
+    <ng-container matColumnDef="engineCode">
         <th mat-header-cell *matHeaderCellDef> Motorkód </th>
         <td mat-cell *matCellDef="let car"> {{car.engineCode}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="equipments">
+    <ng-container matColumnDef="superstructure">
         <th mat-header-cell *matHeaderCellDef> Karoszéria </th>
         <td mat-cell *matCellDef="let car"> {{car.superstructure}} </td>
     </ng-container>

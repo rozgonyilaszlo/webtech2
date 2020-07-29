@@ -18,7 +18,7 @@ export class PartslistComponent implements OnInit {
   constructor(private carService: CarService) { }
 
   ngOnInit() {
-    this.getParts();
+    this.getCars();
     this.dataSource = new MatTableDataSource(this.cars);
 
   }
@@ -31,7 +31,7 @@ export class PartslistComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  getParts() {
+  getCars() {
     this.carService.listCar().subscribe(cars => {
       this.cars = cars;
       this.dataSource.paginator = this.paginator;
